@@ -1,8 +1,17 @@
+import React from "react";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Nav from "./components/Nav";
+import Main from "./pages/Main";
+
 function App() {
   return (
-    <div>
-      hello world
-    </div>
+    <BrowserRouter>
+      <Nav />
+      <Routes>
+        <Route path='/' element={<Main />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
+
 export default App;
