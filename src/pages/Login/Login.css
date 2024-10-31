@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    background-color: #F3EEE5;
+    text-decoration: none;
+    color: #021C40;
+    font-family: 'Abhaya Libre', serif;
+}
+
+.loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginTitle {
+    display: flex;
+    font-size: 32px;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.input-container {
+    margin-bottom: 20px;
+    padding: 20px 0px;
+}
+
+.input-container input {
+    width: 500px;
+    padding: 8px 0;
+    border: none;
+    border-bottom: 1px solid #021C40;
+    background-color: transparent;
+    font-size: 25px;
+    outline: none;
+}
+
+.input-container input:focus {
+    border-bottom: 2px solid #021C40;
+}
+
+.loginButton {
+    padding: 10px 120px;
+    background-color: #021C40;
+    color: #F3EEE5;
+    font-size: 20px;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.loginInfo {
+    display: flex;
+    justify-content: center;
+}
+
+.forgotPasswordInfo {
+    margin-right: 20px;
+}
+
+.signUpInfo {
+    margin-left: 20px;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
