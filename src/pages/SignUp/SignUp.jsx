@@ -99,7 +99,7 @@ export default function SignUp() {
             <div className='loginContainer'>
                 <div className='loginTitle'>SignUp</div>
                 <div className='loginForm'>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='text' 
                             placeholder='Username' 
@@ -108,7 +108,7 @@ export default function SignUp() {
                             onChange={(e) => setUsername(e.target.value)}
                         />
                     </div>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='text' 
                             placeholder='Nickname' 
@@ -117,7 +117,7 @@ export default function SignUp() {
                             onChange={(e) => setNickname(e.target.value)}
                         />
                     </div>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='password' 
                             placeholder='Password' 
@@ -127,7 +127,7 @@ export default function SignUp() {
                         />
                         {passwordError && <div className='error-message'>{passwordError}</div>}
                     </div>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='password' 
                             placeholder='Confirm Password' 
@@ -137,7 +137,7 @@ export default function SignUp() {
                         />
                         {confirmPasswordError && <div className='error-message'>{confirmPasswordError}</div>}
                     </div>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='email' 
                             placeholder='Email' 
@@ -148,11 +148,7 @@ export default function SignUp() {
                         {emailError && <div className='error-message'>{emailError}</div>}
                     </div>
                 </div>
-                <div className='loginButton' onClick={handleSignUp}>SignUp</div>
-                <div className='loginInfo'>
-                    <div className='forgotPasswordInfo'>Forgot Password?</div>
-                    <div className='signUpInfo'>Sign Up</div>
-                </div>
+                <div className='signUpButton' onClick={handleSignUp}>SignUp</div>
             </div>
         </div>
     );

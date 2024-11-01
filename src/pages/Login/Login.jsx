@@ -39,7 +39,7 @@ export default function Login() {
             <div className='loginContainer'>
                 <div className='loginTitle'>LogIn</div>
                 <div className='loginForm'>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='text'
                             placeholder='Username' 
@@ -48,7 +48,7 @@ export default function Login() {
                             required 
                         />
                     </div>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='password' 
                             placeholder='Password' 
