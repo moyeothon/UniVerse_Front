@@ -7,8 +7,7 @@
     color: #021C40;
 }
 
-
-#nav {
+.nav {
     display: flex;
     align-items: center;
     padding: 8px 0px;
@@ -17,7 +16,7 @@
     font-family: 'Abhaya Libre', serif;
 }
 
-#top {
+.top {
     display: flex;
     justify-content: space-between;
     width: 55%;
@@ -26,7 +25,7 @@
     font-weight: 400;
 }
 
-#logo {
+.logo {
     padding-left: 3%;
     font-size: 28px;
     font-weight: 500;
@@ -34,31 +33,31 @@
     display: flex;
 }
 
-#cine-log {
+.cine-log {
     display: flex;
 }
 
-#meet {
+.meet {
     display: flex;
 }
 
-#diary {
+.diary {
     display: flex;
 }
 
-#right {
+.right {
     display: flex;
     width: 10%;
     font-size: 18px;
 }
 
-#login {
+.login {
     display: flex;
     flex-direction: column;
     align-items: center;    
 }
 
-#sign-up {
+.signUp {
     display: flex;
     flex-direction: column;
     align-items: center;

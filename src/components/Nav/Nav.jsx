@@ -4,18 +4,18 @@ import { NavLink } from 'react-router-dom'
 
 export default function Nav() {
     return (
-        <div id='nav'>
-            <NavLink to='/' id='logo'>Logo</NavLink>
-            <div id='top'>
-                <div id='cine-log'>Cine Log</div>
-                <div id='meet'>Meet</div>
-                <div id='diary'>Diary</div>
+        <div className='nav'>
+            <NavLink to='/' className='logo'>Logo</NavLink>
+            <div className='top'>
+                <NavLink to='/cineLog' className='cine-log'>Cine Log</NavLink>
+                <div className='meet'>Meet</div>
+                <div className='diary'>Diary</div>
             </div>
-            <div id='right'>
-                <NavLink to='/login' id='login'>
+            <div className='right'>
+                <NavLink to='/login' className='login'>
                     <div>Login</div>
                 </NavLink>
-                <NavLink to='/signup' id='sign-up'>
+                <NavLink to='/signup' className='signUp'>
                     <div>Sign Up</div>
                 </NavLink>
             </div>
