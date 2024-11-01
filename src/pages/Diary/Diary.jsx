@@ -111,6 +111,10 @@ export const Diary = () => {
                             onChange={handleMovieSelect} 
                         />
                         <img className='search-icon' src={searchicon} alt="search" /> 
+                        <div className='s-list'>
+                            <span className='s-list-item'>베놈</span>
+                        </div>
+                         
                     </div>
                 </div>
                 <div className='d-box'>
