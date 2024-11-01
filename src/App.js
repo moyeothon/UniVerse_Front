@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Nav from "./components/Nav/Nav";
-// import ChatBot from "./components/ChatBot/ChatBot";
+import ChatBot from "./components/ChatBot/ChatBot";
 import Main from "./pages/Main/Main";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
@@ -13,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <Nav />
-      {/* <ChatBot /> */}
+      <ChatBot />
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path='/login' element={<Login />} />
