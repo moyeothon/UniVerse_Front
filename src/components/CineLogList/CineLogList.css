@@ -1,0 +1,183 @@
+.c-container{
+
+    display: flex;
+    width: 874px;
+    flex-direction: column;
+    gap: 32px;
+    margin: 0 auto;
+    padding-bottom: 48px;
+    border-bottom: 2px solid #A9B1B7;;
+}
+
+.c-header{
+display: flex;
+align-items: center;
+gap: 56px;
+align-self: stretch;
+
+}
+
+.imgsize{
+width: 314px;
+height: 314px;
+border-radius: 10px;
+}
+
+.c-text{
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 14px;
+}
+
+.c-title{
+color: #002448;
+font-family: Pretendard;
+font-size: 45px;
+font-weight: 700;
+}
+
+.c-subtitle{
+color: #002448;
+font-family: Pretendard;
+font-size: 24px;
+font-weight: 300;
+
+}
+
+.movie-details {
+color: #596874;
+font-family: Pretendard;
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px;
+}
+
+.recommend{
+display: flex;
+padding: 18px 79px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+border-radius: 15px;
+background: #021C40;
+width: 504px;
+}
+
+.recommend-bad{
+border-radius: 15px;
+border: 2px solid #021C40;
+background: #F3EEE5;
+}
+
+.cr-text{
+color: white;
+background: #021C40;
+text-align: center;
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+}
+
+.r-text-bad{
+color: #021C40;
+background: #F3EEE5;
+text-align: center;
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+}
+
+.gbicon{
+background: #021C40;
+}
+
+.gbicon-bad{
+background: #F3EEE5;
+}
+
+.crcontainer{
+display: flex;
+justify-content: center;
+}
+
+.crating-box {
+display: flex;
+width: 166px;
+align-items: flex-start;
+gap: 10px;
+flex-direction: column;
+}
+
+.rating-label{
+color: #596874;
+font-family: Pretendard;
+font-size: 20px;
+font-weight: 500;
+}
+
+.cstar-rating {
+display: flex;
+gap: 10px;
+}
+
+.cstar {
+font-size: 24px;
+color: #ddd;
+
+}
+
+.cstar-active {
+color: #021C40;
+font-size: 28px;
+
+}
+
+.r-imgs{
+display: flex;
+width: 874px;
+justify-content: center;
+align-items: center;
+gap: 32px;
+}
+
+.record-img{
+display: flex;
+width: 400px;
+height: 340px;
+border-radius: 8px;
+}
+
+
+.creview-textarea {
+display: flex;
+height: 140px;
+padding: 18px;
+align-items: flex-start;
+gap: 10px;
+border-radius: 8px;
+border: 2px solid rgba(2, 28, 64, 0.80);
+}
+
+.creview{
+color: #000;
+font-family: Pretendard;
+font-size: 18px;
+font-style: normal;
+font-weight: 400;
+}
+
+.public{
+display: flex;
+gap: 20px;
+flex-direction: column;
+display: none;
+}
+
+.view{
+display: flex;
+}
