@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&display=swap');
+@font-face {
+    font-family: 'Pretendard-medium';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.frame{
+    display: flex;
+    width: 882px;
+    flex-direction: column;
+    gap: 64px;
+    margin: 0 auto;
+    margin-top: 72px;
+
+}
+
+.d-title {
+    font-size: 70px;
+    text-align: center;
+}
