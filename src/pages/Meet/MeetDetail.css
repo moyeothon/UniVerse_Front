@@ -1,0 +1,243 @@
+@font-face {
+  font-family: 'Pretendard-Bold';
+  src: url('../fonts/Pretendard-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Medium';
+  src: url('../fonts/Pretendard-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('../fonts/Pretendard-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-SemiBold';
+  src: url('../fonts/Pretendard-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+.MeetDetail-container {
+  padding-top: 50px;
+  padding-bottom: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.back_image2 img {
+  width: 45px;
+  height: 45px;
+}
+
+.back_image2 {
+  height: 45px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.MeetDetail-main-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-profile-img img {
+  width: 57px;
+  height: 45px;
+}
+
+.Meet-detail-container {
+  width: 905px;
+}
+
+.Meet-detail-top,
+.detail-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.Meet-detail-top {
+  justify-content: space-between;
+}
+
+.detail-profile {
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+  margin-left: -10px;
+}
+
+.detail-profile-username,
+.Meet-detail-ago,
+.comment-detail-ago,
+.comment-detail-profile-username {
+  font-family: 'Pretendard-Medium';
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 23.87px;
+  text-align: left;
+  color: #75787A;
+}
+
+.comment-detail-profile-username {
+  color: #030027;
+}
+
+.Meet-detail-ago {
+  font-size: 18px;
+}
+
+.comment-detail-ago {
+  font-size: 18px;
+  font-family: 'Pretendard-Regular';
+}
+
+.Meet-detail-section1,.Meet-detail-section2 {
+  color: #468FF5;
+  font-size: 18px;
+  margin-top: 20px;
+  font-family: 'Pretendard-Medium';
+}
+.Meet-detail-section{
+  display: flex;
+  gap: 6px;
+}
+
+.Meet-detail-title {
+  font-family: 'Pretendard-SemiBold';
+  font-size: 24px;
+  font-weight: 600px;
+  line-height: 28.64px;
+  text-align: left;
+  width: 600px;
+  color: #47494A;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.Meet-detail-main {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  margin-left: 5px;
+}
+
+.Meet-detail-link{
+  font-family:'Pretendard-Medium';
+  font-size: 18px;
+  color: #43474D;
+}
+
+.Meet-detail-contents {
+  width: 769px;
+  margin-bottom: 50px;
+  font-family: 'Pretendard-Medium';
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  text-align: left;
+  color: #47494A;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+.Meet-detail-comment-write textarea {
+  resize: none;
+  width: 905px;
+  height: 223px;
+  outline: none;
+  border: none;
+  padding: 30px;
+  border-radius: 15px;
+  background: #A4AEBC;
+  font-family: 'Pretendard-Regular';
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 23.87px;
+  color: #ffffff;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.Meet-detail-comment-write textarea::placeholder {
+  color: #ffffff;
+}
+
+.Meet-detail-comment-write {
+  position: relative;
+  margin-top: 35px;
+}
+
+.Meet-detail-comment-write button {
+  background: #021C40;
+  color: #ffffff;
+  width: Hug (130px)px;
+  height: Hug (45px)px;
+  padding: 13px 37px 13px 37px;
+  border-radius: 15px;
+  font-family: 'Pretendard-SemiBold';
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.09px;
+  position: absolute;
+  bottom: 30px;
+  right: 0;
+  margin-right: 30px;
+  border: none;
+}
+
+.Meet-detail-comment-write button:hover:focus {
+  border: none;
+  outline: none;
+}
+
+.Meet-detail-comment {
+  width: 905px;
+  height: 191px;
+  margin-top: 35px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.comment-detail-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-detail-profile {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.comment-detail-contents {
+  font-family: 'Pretendard-Regular';
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: left;
+  width: 700px;
+  color: #47494A;
+  margin-bottom: 30px;
+  padding-left: 30px;
+}
+
+

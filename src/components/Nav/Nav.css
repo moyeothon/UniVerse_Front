@@ -47,7 +47,6 @@
 
 .right {
     display: flex;
-    width: 10%;
     font-size: 18px;
 }
 
@@ -62,4 +61,11 @@
     flex-direction: column;
     align-items: center;
     padding-left: 20%;
+}
+
+.person {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    margin-right: 15px;
 }

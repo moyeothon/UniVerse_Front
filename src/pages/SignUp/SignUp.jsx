@@ -77,7 +77,7 @@ export default function SignUp() {
             }, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': '*/*'
+                    // 'Accept': '*/*'
                 }
             });
     
@@ -93,6 +93,11 @@ export default function SignUp() {
         }
     };
     
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSignUp();
+        }
+    };
 
     return (
         <div className='loginPage'>
@@ -106,6 +111,7 @@ export default function SignUp() {
                             required 
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
+                            onKeyDown={handleKeyDown}
                         />
                     </div>
                     <div className='inputContainer'>
@@ -115,6 +121,7 @@ export default function SignUp() {
                             required 
                             value={nickname}
                             onChange={(e) => setNickname(e.target.value)}
+                            onKeyDown={handleKeyDown}
                         />
                     </div>
                     <div className='inputContainer'>
@@ -124,8 +131,9 @@ export default function SignUp() {
                             required 
                             value={password}
                             onChange={handlePasswordChange}
+                            onKeyDown={handleKeyDown}
                         />
-                        {passwordError && <div className='error-message'>{passwordError}</div>}
+                        {passwordError && <div className='errorMessage'>{passwordError}</div>}
                     </div>
                     <div className='inputContainer'>
                         <input 
@@ -134,8 +142,9 @@ export default function SignUp() {
                             required 
                             value={confirmPassword}
                             onChange={handleConfirmPasswordChange}
+                            onKeyDown={handleKeyDown}
                         />
-                        {confirmPasswordError && <div className='error-message'>{confirmPasswordError}</div>}
+                        {confirmPasswordError && <div className='errorMessage'>{confirmPasswordError}</div>}
                     </div>
                     <div className='inputContainer'>
                         <input 
@@ -144,8 +153,9 @@ export default function SignUp() {
                             required 
                             value={email}
                             onChange={handleEmailChange}
+                            onKeyDown={handleKeyDown}
                         />
-                        {emailError && <div className='error-message'>{emailError}</div>}
+                        {emailError && <div className='errorMessage'>{emailError}</div>}
                     </div>
                 </div>
                 <div className='signUpButton' onClick={handleSignUp}>SignUp</div>

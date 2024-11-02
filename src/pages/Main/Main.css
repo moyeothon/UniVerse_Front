@@ -40,14 +40,19 @@
 .mainInfo {
     display: flex;
     flex-direction: column;
+    height: 420px;
+    justify-content: space-between;
     margin-left: 10%;
 }
 
 .mainInfoTitle {
     font-size: 50px;
     font-weight: bold;
-    margin-bottom: 30%;
     letter-spacing: 2px;
+}
+
+.mainInfoSummary {
+    font-size: 20px;
 }
 
 .mainInfoContent {

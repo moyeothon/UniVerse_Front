@@ -7,6 +7,7 @@
     background-color: #F3EEE5;
     text-decoration: none;
     color: #021C40;
+    font-family: 'Abhaya Libre', serif;
 }
 
 .cineLogPage {
@@ -18,7 +19,7 @@
 }
 
 .cineLogLogo {
-    font-family: 'Abhaya Libre', serif;
+    /* font-family: 'Abhaya Libre', serif; */
     font-size: 60px;
     font-weight: 700;
     display: flex;

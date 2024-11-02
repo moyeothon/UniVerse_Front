@@ -1,0 +1,265 @@
+@font-face {
+  font-family: 'Pretendard-Bold';
+  src: url('../fonts/Pretendard-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Medium';
+  src: url('../fonts/Pretendard-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('../fonts/Pretendard-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-SemiBold';
+  src: url('../fonts/Pretendard-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+.MeetMain_container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+.MeetMain_title{
+  font-size: 60px;
+  margin-bottom: 50px;
+}
+
+.MeetMain_category{
+  display: flex;
+  flex-direction: row;
+  gap: 120px;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.MeetMain_category_cinema{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-left: 200px;
+}
+
+.MeetMain_cinema_CGV,
+.MeetMain_cinema_LotteCinema,
+.MeetMain_cinema_MEGABOX,
+.MeetMain_cinema_others {
+  width: 110px;
+  height: 20px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  background-color: #F6F6F6;
+  border-radius: 30px;
+  text-align: center;
+  font-family: Pretendard-Medium;
+  font-size: 13px;
+  color: #75787A;
+  cursor: pointer;
+}
+
+.MeetMain_category_cinema div.active {
+  background-color: #5D779A;
+  color: #ffffff;
+}
+
+
+
+.MeetMain_contents_goWrite{
+  width: 882px;
+  height: 54px;
+  background-color: #D1D5DF;
+  color: #2A4F82;
+  font-size: 36px;
+  cursor: pointer;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family:'Pretendard-SemiBold' ;
+  margin-bottom: 10px;
+}
+
+.MeetMain_contents{
+  width: 882px;
+  height: 142px;
+  background-color: #f6f6f6;
+  padding: 15px; /* 내부 여백 설정 */
+  border-radius: 15px;
+  box-sizing: border-box; /* padding을 포함한 넓이 계산 */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* 내부 요소 간 간격 */
+  margin-bottom: 15px;
+}
+
+.MeetMain_contents_top{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #f6f6f6;
+  margin-left: 10px;
+  gap: 680px;
+}
+.MeetMain_contents_top span{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  background-color: #f6f6f6;
+}
+
+.MeetMain_contents_profile_img img{
+  width: 51.15px;
+  height: 42px;
+  background-color: #f6f6f6;
+}
+.MeetMain_contents_profile_img{
+  background-color: #f6f6f6;
+}
+
+.MeetMain_contents_userNick,.MeetMain_contents_daysAgo{
+  font-family: 'Pretendard-Medium';
+  font-size: 16px;
+  color: #75787A;
+  background-color: #f6f6f6;
+}
+
+.MeetMain_contents_daysAgo{
+  color: #A1A6A9;
+  background-color: #f6f6f6;
+}
+.MeetMain_contents_sub{
+  color: #47494A;
+  font-size: 18px;
+  font-family: 'Pretendard-Medium';
+  background-color: #f6f6f6;
+  margin-left: 18px;
+}
+.MeetMain_contents_bottom{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  background-color: #f6f6f6;
+  justify-content: flex-end;
+  margin-right: 30px;
+}
+.MeetMain_contents_bottom span{
+  color: #468FF5;
+  font-size: 16px;
+  font-family: 'Pretendard-Medium';
+  background-color: #f6f6f6;
+}
+
+.MeetMain_pagination {
+  margin-top: 20px;
+  width: 905px;
+  padding-left: 40px;
+  height: 38.38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+
+.MeetMain_pagination button {
+  width: 30px;
+  height: 30px;
+  background-color: #F3EEE5;  border-radius: 4px;
+  font-family: Inter-Medium;
+  font-size: 16px;
+  text-align: center;
+  color: #D1D5D7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  border: none;
+}
+
+.MeetMain_pagination button.active {
+  background-color: #D1D5DF;
+  color: #021C40;
+}
+
+
+
+
+
+
+/* 드롭다운 컨테이너 스타일 */
+.MeetMain_category_region {
+  position: relative;
+  width: 70px;
+}
+
+.MeetMain_category_region input[type="button"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 13px;
+  font-family: 'Pretendard-Medium';
+  color: #75787A;
+  cursor: pointer;
+  background-color: #f6f6f6;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+/* 드롭다운 메뉴 스타일 */
+.MeetMain_category_region ul {
+  position: absolute;
+  top: 110%; 
+  left: 0;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #f6f6f6;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  transition: opacity 0.3s ease; /* 나타나는 애니메이션 */
+}
+
+/* 드롭다운 항목 스타일 */
+.MeetMain_category_region ul li {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Pretendard-Medium';
+  color: #75787A;
+  background-color: #f6f6f6;
+}
+
+.MeetMain_category_region ul li:hover {
+  background-color: #f5f5f5;
+}
+
+/* 드롭다운 활성화 상태 */
+.MeetMain_category_region ul.open {
+  display: block;
+  opacity: 1;
+}
+
+.MeetMain_category_region ul.closed {
+  display: none;
+  opacity: 0;
+}
+

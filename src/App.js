@@ -8,6 +8,9 @@ import SignUp from "./pages/SignUp/SignUp";
 import PasswordEmail from "./pages/PasswordEmail/PasswordEmail";
 import PasswordReset from "./pages/PasswordReset/PasswordReset";
 import CineLog from "./pages/CineLog/CineLog";
+import MeetMain from "./pages/Meet/MeetMain";
+import MeetWrite from "./pages/Meet/MeetWrite";
+import MeetDetail from "./pages/Meet/MeetDetail"
 
 function App() {
   return (
@@ -21,6 +24,9 @@ function App() {
         <Route path='/passwordEmail' element={<PasswordEmail />} />
         <Route path='/passwordReset' element={<PasswordReset />} />
         <Route path='/cineLog' element={<CineLog />} />
+        <Route path='/meetMain' element={<MeetMain />} />
+        <Route path='/meetWrite' element={<MeetWrite />} />
+        <Route path='/meetDetail' element={<MeetDetail />} />
       </Routes>
     </BrowserRouter>
   );
