@@ -15,7 +15,7 @@ export default function Nav() {
 
     return (
         <div className='nav'>
-            <NavLink to='/' className='logo'>Logo</NavLink>
+            <NavLink to='/' className='logo'>Film Note</NavLink>
             <div className='top'>
                 <NavLink to='/cineLog' className='cine-log'>Cine Log</NavLink>
                 <NavLink to='/meetMain' className='meet'>Meet</NavLink>
