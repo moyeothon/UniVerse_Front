@@ -29,7 +29,7 @@
     padding-left: 3%;
     font-size: 28px;
     font-weight: 500;
-    width: 10%;
+    width: fit-content;
     display: flex;
 }
 
@@ -45,9 +45,11 @@
     display: flex;
 }
 
-.right {
+.right, .rightContainer {
     display: flex;
+    align-items: center;
     font-size: 18px;
+    width: 150px;
 }
 
 .login {
@@ -61,6 +63,11 @@
     flex-direction: column;
     align-items: center;
     padding-left: 20%;
+}
+
+.logout {
+    display: flex;
+    padding-right: 20px;
 }
 
 .person {
