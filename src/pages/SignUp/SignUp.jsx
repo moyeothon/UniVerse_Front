@@ -100,10 +100,10 @@ export default function SignUp() {
     };
 
     return (
-        <div className='loginPage'>
-            <div className='loginContainer'>
-                <div className='loginTitle'>SignUp</div>
-                <div className='loginForm'>
+        <div className='signUpPage'>
+            <div className='signUpContainer'>
+                <div className='signUpTitle'>SignUp</div>
+                <div className='signUpForm'>
                     <div className='inputContainer'>
                         <input 
                             type='text' 

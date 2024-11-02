@@ -39,8 +39,8 @@
 .mainInfo {
     display: flex;
     flex-direction: column;
-    height: 420px;
-    justify-content: space-between;
+    height: 430px;
+    justify-content: center;
     margin-left: 10%;
 }
 
@@ -48,10 +48,18 @@
     font-size: 50px;
     font-weight: bold;
     letter-spacing: 2px;
+    margin-bottom: 20px;
 }
 
 .mainInfoSubTitle {
     font-size: 30px;
+}
+
+.movieInfoContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .mainInfoContent {
