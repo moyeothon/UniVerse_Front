@@ -114,7 +114,7 @@ export default function MeetMain() {
               </div>
               <div className="MeetMain_contents_userNick">{post.host?.nickname || "Unknown"}</div>
             </span>
-            <div className="MeetMain_contents_daysAgo">3일 전</div>
+            <div className="MeetMain_contents_daysAgo">1일 전</div>
           </div>
           <div className="MeetMain_contents_sub">{post.contents}</div>
           <div className="MeetMain_contents_bottom">
