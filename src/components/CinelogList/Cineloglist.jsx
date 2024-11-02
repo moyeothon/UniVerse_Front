@@ -1,10 +1,10 @@
-import './Cineloglist.css';
+import './CineLogList.css';
 import wgood from '../../pages/Diary/assets/w-good.svg';
 import nbad from '../../pages/Diary/assets/n-bad.svg';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function Cineloglist() {
+export default function CineLogList() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
