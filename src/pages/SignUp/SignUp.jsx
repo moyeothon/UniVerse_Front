@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './SignUp.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
 export default function SignUp() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -77,7 +78,7 @@ export default function SignUp() {
             }, {
                 headers: {
                     'Content-Type': 'application/json',
-                    // 'Accept': '*/*'
+                    'Accept': '*/*'
                 }
             });
     

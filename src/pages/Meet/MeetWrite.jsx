@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import './MeetWrite.css';
 import useDetectClose from './UseDetectClose';
@@ -11,28 +12,31 @@ export default function MeetWrite() {
   const dropDownRegionRef = useRef();
   const [title, setTitle] = useState("");
   const [contents, setContent] = useState("");
-  const [openChatLink, setLink] = useState("");
+  const [chatUrl, setLink] = useState("");
   const [selectedCinema, setSelectedCinema] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
   const [isCinemaOpen, setIsCinemaOpen] = useDetectClose(dropDownCinemaRef, false);
   const [isRegionOpen, setIsRegionOpen] = useDetectClose(dropDownRegionRef, false);
+  const navigate = useNavigate();
 
-  const memberId = localStorage.getItem('memberId');
+      const accessToken = localStorage.getItem('accessToken');
 
   const handleSubmit = async () => {
-    const data = {
-      memberId: 222,
-      title,
-      contents,
-      openChatLink,
-      theaterName: selectedCinema,
-      location: selectedRegion,
-    };
-
     try {
-      const response = await axios.post('http://moyeothon.limikju.com:8080/api/posts', { data });
-      if (response.status === 201) {
+      const response = await axios.post('http://moyeothon.limikju.com:8080/api/meetings', {
+        title,
+        contents,
+        chatUrl,
+        cinema: selectedCinema,
+        location: selectedRegion,
+      },{
+        headers: {
+          Authorization: `Bearer ${accessToken}`, 
+        }
+      });
+      if (response.status === 200) {
         alert("등록 성공!");
+        navigate('/meetMain');
       }
     } catch (error) {
       console.error("등록 실패:", error);
@@ -129,7 +133,7 @@ export default function MeetWrite() {
               type="text"
               className="MeetWrite_link"
               placeholder="오픈채팅 링크를 입력해주세요"
-              value={openChatLink}
+              value={chatUrl}
               onChange={(e) => setLink(e.target.value)}
               required
             />

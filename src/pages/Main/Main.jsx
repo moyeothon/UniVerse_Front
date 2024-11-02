@@ -5,6 +5,7 @@ export default function Main() {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [randomMovie, setRandomMovie] = useState(null);
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -27,6 +28,13 @@ export default function Main() {
         fetchMovies();
     }, []);
 
+    useEffect(() => {
+        if (movies.length > 0) {
+            const randomIndex = Math.floor(Math.random() * movies.length);
+            setRandomMovie(movies[randomIndex]);
+        }
+    }, [movies]);
+
     if (loading) {
         return <div className='mainPage'>Loading...</div>;
     }
@@ -35,29 +43,31 @@ export default function Main() {
         return <div className='mainPage'>Error: {error}</div>;
     }
 
+    if (!randomMovie) {
+        return <div className='mainPage'>No movies available</div>;
+    }
+
     return (
         <div className='mainPage'>
             <div className='mainLogo'>Logo</div>
             <div className='mainContainer'>
-                {movies.map((movie) => (
-                    <div key={movie.id} className='movieItem'>
-                        <div>
-                            <img src={movie.posterUrl} alt={movie.title} className='mainPoster' />
+                <div key={randomMovie.id} className='movieItem'>
+                    <div>
+                        <img src={randomMovie.posterUrl} alt={randomMovie.title} className='mainPoster' />
+                    </div>
+                    <div className='mainInfo'>
+                        <div className='mainInfoTitle'>{randomMovie.title} ({new Date(randomMovie.releaseDate).getFullYear()})</div>
+                        <div className='mainInfoSubTitle'>{randomMovie.subtitle}</div>
+                        <div className='movieInfoContainer'>
+                            <div className='movieInfo'>개봉일 ㅣ {randomMovie.releaseDate}</div>
+                            <div className='movieInfo'>감독 ㅣ {randomMovie.directors}</div>
                         </div>
-                        <div className='mainInfo'>
-                            <div className='mainInfoTitle'>{movie.title} ({new Date(movie.releaseDate).getFullYear()})</div>
-                            <div className='mainInfoSubTitle'>{movie.subtitle}</div>
-                            <div className='movieInfoContainer'>
-                                <div className='movieInfo'>개봉일 ㅣ {movie.releaseDate}</div>
-                                <div className='movieInfo'>감독 ㅣ {movie.directors}</div>
-                            </div>
-                            <div className='mainInfoContent'>
-                                <div className='mainInfoContentNumber'>N</div>
-                                <div className='mainInfoContentText'>명이 이 영화를 추천해요!👍🏻</div>
-                            </div>
+                        <div className='mainInfoContent'>
+                            <div className='mainInfoContentNumber'>{randomMovie.recommendCount}</div>
+                            <div className='mainInfoContentText'>명이 이 영화를 추천해요!👍🏻</div>
                         </div>
                     </div>
-                ))}
+                </div>
             </div>
         </div>
     );

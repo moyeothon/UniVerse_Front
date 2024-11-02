@@ -6,7 +6,6 @@ import profile from './images/profile.png';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 export default function MeetMain() {
   const navigate = useNavigate();
   const dropDownRef = useRef();
@@ -15,101 +14,45 @@ export default function MeetMain() {
   const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [posts, setPosts] = useState([]); 
+  const [meetPost, setMeetPost] = useState([]); 
   const [selectedRegion, setSelectedRegion] = useState(''); 
   const postsPerPage = 4; 
 
-  // const dummyPosts = [
-  //   {
-  //     nickname: '홍길동',
-  //     dayAgo: '1일 전',
-  //     content: '10/30일 건대 CGV에서 7시 영화 보실분~',
-  //     cinema: 'CGV',
-  //     region: '서울'
-  //   },
-  //   {
-  //     nickname: '김철수',
-  //     dayAgo: '2일 전',
-  //     content: '강남 메가박스에서 영화 볼 사람~',
-  //     cinema: 'MEGABOX',
-  //     region: '경기'
-  //   },
-  //   {
-  //     nickname: '이영희',
-  //     dayAgo: '3일 전',
-  //     content: '롯데시네마에서 새로운 영화를 보고 싶어요.',
-  //     cinema: '롯데시네마',
-  //     region: '서울'
-  //   },
-  //   {
-  //     nickname: '박철수',
-  //     dayAgo: '5일전',
-  //     content: 'CGV에서 데이트 할 사람 구해요!',
-  //     cinema: 'CGV',
-  //     region: '부산'
-  //   },
-  //   {
-  //     nickname: '최길동',
-  //     dayAgo: '10일 전',
-  //     content: '영화 보고 싶으신 분은 연락주세요!',
-  //     cinema: 'MEGABOX',
-  //     region: '부산'
-  //   }
-  // ];
-
-
-  // const [meetposts, setMeetpost] = useState([]);
-
-  // const calculateDaysAgo = (createdAt) => {
-  //   const date1 = new Date(createdAt);
-  //   const date2 = new Date();
-  //   const diffTime = Math.abs(date2 - date1);
-  //   return Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  // };
-
-  const [meetPost, setMeetPost] = useState([]);
-
-
   useEffect(() => {
     const fetchPosts = async () => {
-        try {
-            const response = await axios.get('http://moyeothon.limikju.com:8080/api/posts');
-            setMeetPost(response.data); 
-        } catch (error) {
-            console.error('Failed to fetch generalpost', error);
+      const accessToken = localStorage.getItem('accessToken');
+      try {
+        const response = await axios.get('http://moyeothon.limikju.com:8080/api/meetings', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, 
+          }
+        });
+
+        if (response.data.isSuccess) {
+          setMeetPost(response.data.result); 
+          console.log("Fetched posts:", response.data.result);  // 배열 전체를 출력
+        } else {
+          console.error('Failed to fetch post:', response.data.message);
         }
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
     };
-
     fetchPosts();
-}, []);
-
-  // useEffect(() => {
-  //   // 더미 데이터 사용
-  //   setPosts(dummyPosts);
-  // }, []);
+  }, []);
 
   const toggleCategory = (category) => {
-    if (selectedCategory === category) {
-      setSelectedCategory("");
-    } else {
-      setSelectedCategory(category);
-      setCurrentPage(1); 
-    }
+    setSelectedCategory(selectedCategory === category ? "" : category);
+    setCurrentPage(1); 
   };
 
-  const viewMeetDetail = async (meetPostId) => {
-    try {
-        navigate(`/MeetDetail/${meetPostId}`); // meetPostId로 이동
-    } catch (error) {
-        console.error(error);
-    }
-};
+  const viewMeetDetail = (postId) => {
+    navigate(`/MeetDetail/${postId}`);
+  };
 
-
-  // 게시글 필터링 아랫줄 posts를 백 연결후 meetposts로 변경
-  const filteredPosts = posts.filter(post => {
+  const filteredPosts = meetPost.filter(post => {
     const matchesCategory = selectedCategory ? post.cinema === selectedCategory : true;
-    const matchesRegion = selectedRegion ? post.region === selectedRegion : true;
+    const matchesRegion = selectedRegion ? post.location === selectedRegion : true;
     return matchesCategory && matchesRegion;
   });
 
@@ -127,38 +70,15 @@ export default function MeetMain() {
       <div className="MeetMain_title">Meet</div>
       <div className="MeetMain_category">
         <div className="MeetMain_category_cinema">
-          <div
-            className={`MeetMain_cinema_CGV ${
-              selectedCategory === "CGV" ? "active" : ""
-            }`}
-            onClick={() => toggleCategory("CGV")}
-          >
-            CGV
-          </div>
-          <div
-            className={`MeetMain_cinema_LotteCinema ${
-              selectedCategory === "롯데시네마" ? "active" : ""
-            }`}
-            onClick={() => toggleCategory("롯데시네마")}
-          >
-            롯데시네마
-          </div>
-          <div
-            className={`MeetMain_cinema_MEGABOX ${
-              selectedCategory === "MEGABOX" ? "active" : ""
-            }`}
-            onClick={() => toggleCategory("MEGABOX")}
-          >
-            MEGABOX
-          </div>
-          <div
-            className={`MeetMain_cinema_others ${
-              selectedCategory === "기타" ? "active" : ""
-            }`}
-            onClick={() => toggleCategory("기타")}
-          >
-            기타
-          </div>
+          {["CGV", "롯데시네마", "MEGABOX", "기타"].map(category => (
+            <div
+              key={category}
+              className={`MeetMain_cinema_${category} ${selectedCategory === category ? "active" : ""}`}
+              onClick={() => toggleCategory(category)}
+            >
+              {category}
+            </div>
+          ))}
         </div>
         <div className="MeetMain_category_region" ref={dropDownRef}>
           <input
@@ -184,22 +104,22 @@ export default function MeetMain() {
           }
         </div>
       </div>
-      <div className="MeetMain_contents_goWrite"  onClick={() => navigate("/meetWrite")}>+</div>
-      {meetPost.map((post) => (//아래를 key={post.meetpostId} onClick={()=>viewMeetDetail(post.meetpostId)}로 수정 
-        <div className="MeetMain_contents"  key={post.meetpostId} onClick={()=>viewMeetDetail(post.meetpostId)}>
+      <div className="MeetMain_contents_goWrite" onClick={() => navigate("/meetWrite")}>+</div>
+      {currentPosts.map((post) => (
+        <div className="MeetMain_contents" key={post.id} onClick={() => viewMeetDetail(post.id)}>
           <div className="MeetMain_contents_top">
             <span>
               <div className="MeetMain_contents_profile_img">
                 <img src={profile} alt="profile-img" />
               </div>
-              <div className="MeetMain_contents_userNick">{post.writer}</div>
+              <div className="MeetMain_contents_userNick">{post.host?.nickname || "Unknown"}</div>
             </span>
             <div className="MeetMain_contents_daysAgo">3일 전</div>
           </div>
           <div className="MeetMain_contents_sub">{post.contents}</div>
           <div className="MeetMain_contents_bottom">
-            <span>{post.theater}</span>
-            <span>{post.region}</span>
+            <span>{post.cinema}</span>
+            <span>{post.location}</span>
           </div>
         </div>
       ))}

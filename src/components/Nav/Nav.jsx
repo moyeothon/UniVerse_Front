@@ -25,7 +25,9 @@ export default function Nav() {
                 {isLoggedIn ? (
                     <div className='rightContainer'>
                         <div className='logout' onClick={handleLogout}>LogOut</div>
-                        <div><IoPersonCircleSharp className='person' /></div>
+                        <div>
+                            <IoPersonCircleSharp className='person' />
+                        </div>
                     </div>
                 ) : (
                     <>
