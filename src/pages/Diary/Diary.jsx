@@ -318,7 +318,7 @@ export const Diary = () => {
                                 <div key={item.id} className="rating-box">
                                     <div className="r-text">{item.label}</div>
                                     <div className="star-rating">
-                                        {[1,2,3,4,5].map((별)=> (
+                                        {[1,2,3,4,5].map((star)=> (
                                             <span className={ratings[item.id] >= star ? "star-active" : "star"} onClick={() => handleStarClick(item.id, star)}>
                                                 ★
                                             </span>
