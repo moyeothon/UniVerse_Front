@@ -8,6 +8,7 @@ import nbad from './assets/n-bad.svg';
 import wbad from './assets/w-bad.svg'
 import camera from './assets/camera.svg';
 
+
 export const Diary = () => {
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
@@ -26,37 +27,36 @@ export const Diary = () => {
     });
     const [searchTerm, setSearchTerm] = useState('');
     const [movies, setMovies] = useState([]);
+    const [inputTitle, setInputTitle] = useState('');
+    const [diaryData, setDiaryData] = useState({ movieId: null, title: '' });
 
     useEffect(() => {
         if (searchTerm) {
             const fetchMovies = async () => {
                 try {
-                    const response = await fetch(`http://moyeothon.limikju.com:8080/api/movies`);
+                    const response = await fetch(`http://your-api-url.com/movies?page=1&size=10&keyword=${searchTerm}`);
                     const data = await response.json();
-
+    
+                    
                     const movieList = data.result && Array.isArray(data.result.content) ? data.result.content : [];
-                    console.log("Fetched Movies:", movieList);
+                    console.log("Fetched Movies:", movieList); // 배열 확인
                     setMovies(movieList);
                 } catch (error) {
                     console.error('Error fetching movies:', error);
                     setMovies([]); 
                 }
             };
-
+    
             fetchMovies();
         } else {
             setMovies([]); 
         }
     }, [searchTerm]);
-
-    const handleMovieClick = (title) => {
-        setSearchTerm(title);
-        setMovies([]); // 목록을 비워서 선택한 항목만 보여주도록 합니다.
+    const handleMovieClick = (movie) => {
+        setInputTitle(movie.title); 
+        setDiaryData({ movieId: movie.id, title: movie.title });
     };
-
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-    };
+ 
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
@@ -90,6 +90,7 @@ export const Diary = () => {
             return {
                 ...prev,
                 [id] : rating
+,
             };
         })
     }
@@ -124,6 +125,7 @@ export const Diary = () => {
             const res = await fetch('http://moyeothon.limikju.com:8080/api/records/image',{
                 method:'POST',
                 headers:{
+                    
                     'Authorization': `Bearer ${token}`
                 },
                 body: formData
@@ -142,20 +144,22 @@ export const Diary = () => {
 
     const handleSubmit = async () => {
         const diaryData = {
-            movieId : 1,
-            title : movies.title,
-            body : review,
-            summary : '',
+            movieId : 1, //영화 id
+            title :"베놈", //제목
+            body : review, //내용
+            summary : '', //내용 요약
             whatchLocation: place,
-            scorePerformer : ratings.acting,
-            scoreDirector : ratings.directing,
-            scoreVisual : ratings.visual,
-            scoreMusic : ratings.music,
-            scoreArtistry : ratings.scenario,
-            watchDate : selectedDate,
-            recommend : recommendValue,
-            isPublic : isOn,
-            imageUrls: url
+            scorePerformer : ratings.acting, //연기력
+            scoreDirector : ratings.directing, //연출력
+            scoreVisual : ratings.visual, //영상미
+            scoreMusic : ratings.music, //음악
+            scoreArtistry : ratings.scenario, //예술성=>각본
+            watchDate : selectedDate, //시청일
+            recommend : recommendValue, //추천 여부
+            isPublic : isOn, //공개 여부
+            imageUrls: 
+                url
+            
         }
         
             try {
@@ -190,7 +194,9 @@ export const Diary = () => {
                 console.error('Error')
                 alert('등록 중 오류가 발생했습니다.')
             }
+                
     }
+
 
     return (
         <div className='frame'>
@@ -200,37 +206,31 @@ export const Diary = () => {
                     <div className={`toggle ${isOn ? "toggle-N" : "toggle-W"}`}>{isOn? "공개":"비공개"}</div>
                 </div>
 
+
             <div className='d-container'>
                 <div className='d-box'>
                     <div className='section'>
                         <div className='section-number'>01 l</div>
                         <div className='section-title'>영화선택</div>         
                     </div>
-                    <div className="search-container">
-        <input 
-            className="search-input"
-            type="text"
-            placeholder="영화를 선택해주세요."
-            value={searchTerm}
-            onChange={handleSearchChange} 
-        />
-        <img className="search-icon" src={searchicon} alt="search" /> 
-
-        {movies.length > 0 && 
-            movies.map((movie, index) => (
-                <div 
-                    key={index} 
-                    className="s-list" 
-                    onClick={() => handleMovieClick(movie.title)} 
-                >
-                    <span className="s-list-item">
-                        {movie.title}
-                    </span>
+                    <div className='search-container'>
+                        <input 
+                            className='search-input'
+                            type="text"
+                            placeholder='영화를 선택해주세요.'
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)} 
+                        />
+                        <img className='search-icon' src={searchicon} alt="search" /> 
+                        {movies.map((movie) => (
+                        <div key={movie.id} className="s-list" onClick={() => handleMovieClick(movie)}>
+                            <span className="s-list-item">
+                                {movie.title}
+                            </span>
                 </div>
-            ))
-        }
-    </div>
-
+            ))}
+                         
+                    </div>
                 </div>
                 <div className='d-box'>
                     <div className='section'>
@@ -259,6 +259,7 @@ export const Diary = () => {
                             value={place}
                             onChange={handlePlaceChange}
                         />
+
                     </div>
                 </div>
 
@@ -267,7 +268,10 @@ export const Diary = () => {
                         <div className='section-number'>04 l</div>
                         <div className='section-title'>이미지 업로드</div>         
                     </div>
+                    
+
                     <div className="upload-container">
+
                         {images.map((image, index) => (
                             <div key={index} className="image-wrapper">
                                 <img
@@ -283,10 +287,13 @@ export const Diary = () => {
                                 </button>
                             </div>
                         ))}
+                        
+
                         {images.length < 2 && (
                             <label htmlFor={`image-upload-${images.length}`} className="upload-label">
                                 <div className="upload-box">
                                     <img className='upload-icon' src={camera} alt="camera" />
+                                    
                                     <div className="upload-text">파일 추가하기</div>
                                 </div>
                                 <input
@@ -299,6 +306,9 @@ export const Diary = () => {
                             </label>
                         )}
                     </div>
+                                                 
+
+
                 </div>
 
                 <div className='d-box'>
@@ -318,7 +328,7 @@ export const Diary = () => {
                                 <div key={item.id} className="rating-box">
                                     <div className="r-text">{item.label}</div>
                                     <div className="star-rating">
-                                        {[1,2,3,4,5].map((별)=> (
+                                        {[1,2,3,4,5].map((star)=> (
                                             <span className={ratings[item.id] >= star ? "star-active" : "star"} onClick={() => handleStarClick(item.id, star)}>
                                                 ★
                                             </span>
