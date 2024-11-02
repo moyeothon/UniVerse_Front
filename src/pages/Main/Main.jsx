@@ -49,7 +49,7 @@ export default function Main() {
 
     return (
         <div className='mainPage'>
-            <div className='mainLogo'>Logo</div>
+            <div className='mainLogo'>Film Note</div>
             <div className='mainContainer'>
                 <div key={randomMovie.id} className='movieItem'>
                     <div>
