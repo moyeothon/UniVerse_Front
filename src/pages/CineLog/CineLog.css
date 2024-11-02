@@ -1,77 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&display=swap');
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
-
+@font-face {
+    font-family: 'Pretendard-medium';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
 * {
     margin: 0;
     padding: 0;
-    background-color: #F3EEE5;
     text-decoration: none;
-    color: #021C40;
-    font-family: 'Abhaya Libre', serif;
+    box-sizing: border-box;
 }
 
-.cineLogPage {
+.frame{
     display: flex;
+    width: 882px;
     flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    font-family: 'Pretendard', sans-serif;
+    gap: 64px;
+    margin: 0 auto;
+    margin-top: 72px;
+
 }
 
-.cineLogLogo {
-    /* font-family: 'Abhaya Libre', serif; */
-    font-size: 60px;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-    margin-bottom: 60px;
-}
-
-.cineLogContainer {
-    width: 750px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 35px 0;
-    border-bottom: 1px solid #A9B1B7;
-}
-
-.cineLogPoster {
-    width: 230px;
-}
-
-.cineLogContent {
-    display: flex;
-    flex-direction: column;
-    padding-left: 35px;
-}
-
-.cineLogTitle {
-    font-size: 45px;
-    font-weight: 700;
-    margin-bottom: 16px;
-}
-
-.cineLogInfo {
-    font-size: 25px;
-    margin-bottom: 30px;
-}
-
-.cineLogInfoDetail {
-    font-size: 15px;
-    margin-bottom: 30px;
-}
-
-.cineLogRecommend {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 17px;
-    margin-top: 2%;
-    background-color: #021C40;
-    color: #F3EEE5;
-    padding: 10px 40px;
-    border-radius: 10px;
+.d-title {
+    font-size: 70px;
+    text-align: center;
 }
