@@ -1,12 +1,15 @@
-import './Cinelog.css';
-import { Cineloglist } from '../../components/CinelogList/Cineloglist';
-export const Cinelog = () => {
+import './CineLog.css';
+import CineLogList from '../../components/CineLogList/CineLogList';
+
+export const CineLog = () => {
     return (
         <div className='frame'>
-            <div className='d-title'>Cinelog</div>
+            <div className='d-title'>Cine Log</div>
             <div>
-                <Cineloglist></Cineloglist>
+                <CineLogList></CineLogList>
             </div>
         </div>
     );
 }
+
+export default CineLog;

@@ -1,10 +1,10 @@
-import './Cineloglist.css';
+import './CineLogList.css';
 import wgood from '../../pages/Diary/assets/w-good.svg';
 import nbad from '../../pages/Diary/assets/n-bad.svg';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const Cineloglist= () => {
+export const CineLogList= () => {
     const [ratings, setRatings] = useState({
         acting: 0,
         directing: 0,
@@ -67,8 +67,8 @@ export const Cineloglist= () => {
                             <div className="cstar-rating">
                                 {[1, 2, 3, 4, 5].map(star => (
                                 <span
-                                 key={star}
-                                 className={ratings[item.id] >= star ? "cstar-active" : "cstar"}
+                                    key={star}
+                                    className={ratings[item.id] >= star ? "cstar-active" : "cstar"}
                                 >
                                     ★
                                 </span>
@@ -92,3 +92,5 @@ export const Cineloglist= () => {
         </div>
     );
 }
+
+export default CineLogList;
