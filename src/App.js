@@ -27,7 +27,7 @@ function App() {
         <Route path='/cineLog' element={<CineLog />} />
         <Route path='/meetMain' element={<MeetMain />} />
         <Route path='/meetWrite' element={<MeetWrite />} />
-        <Route path='/meetDetail' element={<MeetDetail />} />
+        <Route path='/meetDetail/:id' element={<MeetDetail />} />
         <Route path='/diary' element={<Diary />} />
       </Routes>
     </BrowserRouter>

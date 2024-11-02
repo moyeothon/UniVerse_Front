@@ -1,13 +1,13 @@
 import './Diary.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Add axios import
 import searchicon from './assets/search.svg';
 import ngood from './assets/n-good.svg';
 import wgood from './assets/w-good.svg';
 import nbad from './assets/n-bad.svg';
-import wbad from './assets/w-bad.svg'
+import wbad from './assets/w-bad.svg';
 import camera from './assets/camera.svg';
-
 
 export const Diary = () => {
     const navigate = useNavigate();
@@ -25,98 +25,92 @@ export const Diary = () => {
         music: 0,
         visual: 0
     });
+
     const handleSubmit = async () => {
         const diaryData = {
-            movieId : "Long", //영화 id
-            title : selectedMovie, //제목
-            body : review, //내용
-            summary : '', //내용 요약
-            place: place,
-            scorePerformer : ratings.acting, //연기력
-            scoreDirector : ratings.directing, //연출력
-            scoreVisual : ratings.visual, //영상미
-            scoreMusic : ratings.music, //음악
-            scoreArtistry : ratings.scenario, //예술성=>각본
-            watchDate : selectedDate, //시청일
-            isRecommend : recommendValue, //추천 여부
-            isPublic : !isOn, //공개 여부
+            movieId: 1, //영화 id
+            title: selectedMovie, //제목
+            body: review, //내용
+            summary: '', //내용 요약
+            watchLocation: place,
+            scorePerformer: ratings.acting, //연기력
+            scoreDirector: ratings.directing, //연출력
+            scoreVisual: ratings.visual, //영상미
+            scoreMusic: ratings.music, //음악
+            scoreArtistry: ratings.scenario, //예술성=>각본
+            watchDate: selectedDate, //시청일
+            isRecommend: recommendValue, //추천 여부
+            isPublic: !isOn, //공개 여부
             imageUrls: [
                 images
             ]
-        }
-        
-            try {
-                const token = localStorage.getItem('accessToken');
+        };
 
-                if (!token) {
-                    alert('로그인이 필요합니다.');
-                    navigate('/login')
-                    return ;
-                }
-                const response = await fetch('http://moyeothon.limikju.com:8080/api/records',{
-                    method:'POST',
-                    headers:{
-                        'Content-Type':'application/json',
-                        'Authorization': token
-                    },
-                    body:JSON.stringify(diaryData)
-                });
-    
-                if(response.status===200){
-                    console.log(diaryData);
-                    alert('글이 등록되었습니다.');
-                    navigate('/cinelog');
-                } else {
-                    if(response.status === 401) {
-                        alert('인증이 만료되었습니다. 다시 로그인해주세요.')
-                        navigate('/login');
-                        return;
-                    }
-                }
-            }catch(error){
-                console.error('Error')
-                alert('등록 중 오류가 발생했습니다.')
+        try {
+            const token = localStorage.getItem('accessToken');
+
+            if (!token) {
+                alert('로그인이 필요합니다.');
+                navigate('/login');
+                return;
             }
-                
-    }
-    
-    
+
+            const response = await axios({
+                method: 'post',
+                url: 'http://moyeothon.limikju.com:8080/api/records',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                data: diaryData
+            });
+
+            if (response.status === 200) {
+                console.log(diaryData);
+                alert('글이 등록되었습니다.');
+                navigate('/cinelog');
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                alert('인증이 만료되었습니다. 다시 로그인해주세요.');                // navigate('/login');
+                return;
+            }
+            console.error('Error:', error);
+            alert('등록 중 오류가 발생했습니다.');
+        }
+    };
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
         if (files.length === 0) return;
-    
+
         const newFiles = files.slice(0, 2 - images.length);
         
         newFiles.forEach(file => {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            setImages(prev => {
-              if (prev.length >= 2) return prev;
-              return [...prev, {
-                url: e.target.result,
-                name: file.name
-              }];
-            });
-          };
-          reader.readAsDataURL(file);
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setImages(prev => {
+                    if (prev.length >= 2) return prev;
+                    return [...prev, {
+                        url: e.target.result,
+                        name: file.name
+                    }];
+                });
+            };
+            reader.readAsDataURL(file);
         });
-      };
-    
-      const removeImage = (index) => {
-        setImages(prev => prev.filter((_, i) => i !== index));
-      };
+    };
 
+    const removeImage = (index) => {
+        setImages(prev => prev.filter((_, i) => i !== index));
+    };
 
     const handleStarClick = (id, rating) => {
-        setRatings((prev) => {
-            return {
-                ...prev,
-                [id] : rating
-,
-            };
-        })
-    }
+        setRatings((prev) => ({
+            ...prev,
+            [id]: rating,
+        }));
+    };
 
     const handleRecommendation = (buttonType) => {
         setRecommendValue(buttonType);
@@ -139,19 +133,17 @@ export const Diary = () => {
     };
 
     const toggleHandler = () => {
-        setOn(!isOn)
-        setRecommendValue(!recommendValue)
+        setOn(!isOn);
+        setRecommendValue(!recommendValue);
     };
-
 
     return (
         <div className='frame'>
             <div className='d-title'>Diary</div>
 
-                <div className={`r-squre ${isOn ? "squre-N" : "squre-W"}`} onClick={toggleHandler}>
-                    <div className={`toggle ${isOn ? "toggle-N" : "toggle-W"}`}>{isOn? "공개":"비공개"}</div>
-                </div>
-
+            <div className={`r-squre ${isOn ? "squre-N" : "squre-W"}`} onClick={toggleHandler}>
+                <div className={`toggle ${isOn ? "toggle-N" : "toggle-W"}`}>{isOn? "공개":"비공개"}</div>
+            </div>
 
             <div className='d-container'>
                 <div className='d-box'>
@@ -171,7 +163,6 @@ export const Diary = () => {
                         <div className='s-list'>
                             <span className='s-list-item'>베놈</span>
                         </div>
-                         
                     </div>
                 </div>
                 <div className='d-box'>
@@ -201,7 +192,6 @@ export const Diary = () => {
                             value={place}
                             onChange={handlePlaceChange}
                         />
-
                     </div>
                 </div>
 
@@ -210,10 +200,7 @@ export const Diary = () => {
                         <div className='section-number'>04 l</div>
                         <div className='section-title'>이미지 업로드</div>         
                     </div>
-                    
-
                     <div className="upload-container">
-
                         {images.map((image, index) => (
                             <div key={index} className="image-wrapper">
                                 <img
@@ -229,13 +216,11 @@ export const Diary = () => {
                                 </button>
                             </div>
                         ))}
-                        
 
                         {images.length < 2 && (
                             <label htmlFor={`image-upload-${images.length}`} className="upload-label">
                                 <div className="upload-box">
                                     <img className='upload-icon' src={camera} alt="camera" />
-                                    
                                     <div className="upload-text">파일 추가하기</div>
                                 </div>
                                 <input
@@ -248,9 +233,6 @@ export const Diary = () => {
                             </label>
                         )}
                     </div>
-                                                 
-
-
                 </div>
 
                 <div className='d-box'>
@@ -259,7 +241,7 @@ export const Diary = () => {
                         <div className='section-title'>요소별 평가</div>         
                     </div>
                     <div className='search-container'>
-                    <div className='rr-box'>
+                        <div className='rr-box'>
                             {[
                                 { id: 'acting', label: '연기' },
                                 { id: 'directing', label: '연출' },
@@ -270,8 +252,12 @@ export const Diary = () => {
                                 <div key={item.id} className="rating-box">
                                     <div className="r-text">{item.label}</div>
                                     <div className="star-rating">
-                                        {[1,2,3,4,5].map((star)=> (
-                                            <span className={ratings[item.id] >= star ? "star-active" : "star"} onClick={() => handleStarClick(item.id, star)}>
+                                        {[1,2,3,4,5].map((star) => (
+                                            <span 
+                                                key={star}
+                                                className={ratings[item.id] >= star ? "star-active" : "star"} 
+                                                onClick={() => handleStarClick(item.id, star)}
+                                            >
                                                 ★
                                             </span>
                                         ))}
@@ -284,10 +270,7 @@ export const Diary = () => {
                                 value={review}
                                 onChange={handleReviewChange}
                             />
-
-
                         </div>
-
                     </div>
                 </div>
 
@@ -304,7 +287,6 @@ export const Diary = () => {
                             >
                                 추천해요
                                 <img style={{background:'none'}} src={recommendValue ? wgood : ngood} alt="추천" />
-                                
                             </button>
                             <button 
                                 className={`updownBn ${recommendValue ? '' : 'active'}`}
@@ -317,14 +299,10 @@ export const Diary = () => {
                     </div>
                 </div>
 
-                <button className='submit-button' onClick={()=>handleSubmit()} >
+                <button className='submit-button' onClick={handleSubmit}>
                     등록하기
                 </button>
-
             </div>
-
-           
         </div>
-
     );
 };

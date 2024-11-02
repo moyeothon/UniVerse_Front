@@ -7,93 +7,52 @@ import axios from 'axios';
 import { useParams } from "react-router-dom";
 
 export default function MeetDetail() {
-  const { postId } = useParams(); 
-  const [submitComment, setComment] = useState(''); // 댓글 상태
-  const [MeetItem, setMeetItem] = useState({}); // 게시물 데이터를 저장할 상태
-  const [boardComments, setBoardComments] = useState([]); // 댓글 데이터를 저장할 상태
-
-  // 더미 게시물 데이터
-  // const dummyMeetItem = {
-  //   boardPostId: boardPostId, // 현재 게시물 ID
-  //   username: "사용자1",
-  //   title: "영화 추천해주세요!",
-  //   content: "최근에 재미있게 본 영화가 없어서 추천 받고 싶어요. 추천 부탁드립니다!",
-  //   cinema: "CGV",
-  //   region:"서울",
-  //   link:"http://~~~~~~~~",
-  //   createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString
-  // };
-
-  // // 더미 댓글 데이터
-  // const dummyComments = [
-  //   {
-  //     commentId: 1,
-  //     username: "답변자1",
-  //     content: "추천드리는 영화는 '인셉션'입니다. 정말 재미있어요!",
-  //     createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1일 전
-  //   },
-  //   {
-  //     commentId: 2,
-  //     username: "답변자2",
-  //     content: "저는 '타이타닉'을 추천합니다. 감동적이에요.",
-  //     createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2일 전
-  //   },
-  //   {
-  //     commentId: 3,
-  //     username: "답변자3",
-  //     content: "요즘 '오펜하이머'가 화제입니다. 꼭 보세요!",
-  //     createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3일 전
-  //   },
-  // ];
+  const { id } = useParams(); 
+  const [submitComment, setComment] = useState(''); 
+  const [MeetItem, setMeetItem] = useState({}); 
+  const [boardComments, setBoardComments] = useState([]); 
 
   // 게시물 데이터 가져오기
   useEffect(() => {
     const fetchMeetItem = async () => {
-      // API 호출 대신 더미 데이터 사용
+      const token = localStorage.getItem('accessToken');
       try {
-        const response = await axios.get(`http://moyeothon.limikju.com:8080/api/posts/${postId}`);
-        const data = response.data;
-        console.log(data)
-        setMeetItem({
-          ...data,
-          daysAgo: calculateDaysAgo(data.createdAt),
-        }); 
+        const response = await axios.get(`http://moyeothon.limikju.com:8080/api/meetings/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          }
+        });
+        if (response.data.isSuccess) {
+          setMeetItem(response.data.result); 
+          console.log("Fetched post details:", response.data.result);
+        } else {
+          console.error("Failed to fetch post details:", response.data.message);
+        }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching post details:", error);
       } 
-      // setMeetItem({
-      //   ...dummyMeetItem,
-      //   daysAgo: calculateDaysAgo(dummyMeetItem.createdAt),
-      // });
     };
-
     fetchMeetItem();
-  }, [postId]); 
-  
-  // 댓글 데이터 가져오기
-  // const fetchComments = async () => {
-    // API 호출 대신 더미 댓글 데이터 사용
-    // try {
-    //   const response = await axios.get(`http://43.203.243.173:8080/comments/post/${boardPostId}`);
-    //   const data = response.data;
+  }, [id]);
 
-    //   if (Array.isArray(data)) {
-    //     setBoardComments(data);
-    //   } else if (data) {
-    //     setBoardComments([data]); // 댓글이 한 개일 경우 객체를 배열로 변환
-    //   } else {
-    //     setBoardComments([]);
-    //   }
-    //   console.log(response);
-    // } catch (error) {
-    //   console.error(error);
-    // }
-    // setBoardComments(dummyComments);
-  // };
+  // 댓글 가져오기
+  const fetchComments = async () => {
+    try {
+      const response = await axios.get(`http://moyeothon.limikju.com:8080/api/meetings/${id}/comments`);
+      if (response.data && Array.isArray(response.data)) {
+        setBoardComments(response.data);
+      } else {
+        setBoardComments([]);
+      }
+      console.log("Fetched comments:", response.data);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchComments();
-  // }, [postId]);
+  useEffect(() => {
+    fetchComments();
+  }, [id]);
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);
@@ -102,23 +61,19 @@ export default function MeetDetail() {
   // 댓글 생성
   const handleCommentSubmit = async () => {
     const accessToken = localStorage.getItem('accessToken');
-    const data = {
-      boardPostId: postId,
-      content: submitComment
-    };
-
     try {
-      const response = await axios.post(`http://ddd/comments/save`, data, {
+      const response = await axios.post(`http://moyeothon.limikju.com:8080/api/meetings/${id}/comments`, {
+        id: id,
+        contents: submitComment
+      }, {
         headers: {
           'Authorization': `Bearer ${accessToken}`, 
-          'Content-cinema': 'application/json', 
-        },
-        withCredentials: true,
+        }
       });
       if (response.status === 200) {
         alert('등록이 완료되었습니다.');
-        setComment(''); // 댓글 작성 후 입력 필드 초기화
-        // fetchComments(); 
+        setComment('');
+        fetchComments(); 
       }
     } catch (error) {
       console.error('등록 중 오류 발생:', error);
@@ -134,13 +89,13 @@ export default function MeetDetail() {
   };
 
   const navigate = useNavigate();
-  const MeetMain = () => {
+  const goBackToMeetMain = () => {
     navigate('/meetMain');
   };
 
   return (
     <div className="MeetDetail-container">
-      <div className="back_image2" onClick={MeetMain}>
+      <div className="back_image2" onClick={goBackToMeetMain}>
         <img src={backImg} alt="back_image" />
       </div>
       <div className="MeetDetail-main-container">
@@ -150,24 +105,24 @@ export default function MeetDetail() {
               <div className="detail-profile-img">
                 <img src={userprofile} alt="user-img" />
               </div>
-              <div className="detail-profile-username">{MeetItem.username}</div>
+              <div className="detail-profile-username">{MeetItem.host?.nickname || "Unknown"}</div>
             </div>
-            <div className="Meet-detail-ago">{MeetItem.daysAgo}일 전</div>
+            <div className="Meet-detail-ago">{MeetItem.createdAt ? `${calculateDaysAgo(MeetItem.createdAt)}일 전` : 'N/A'}</div>
           </div>
           <div className="Meet-detail-main">
             <div className="Meet-detail-title">
               <div className="Meet-detail-section">
                 <span className="Meet-detail-section1">{MeetItem.cinema}</span>
-                <span className="Meet-detail-section2">{MeetItem.region}</span>
+                <span className="Meet-detail-section2">{MeetItem.location}</span>
               </div>
               <div className="Meet-detail-title">
                 {MeetItem.title}
               </div>
             </div>
             <div className="Meet-detail-contents">
-              {MeetItem.content}
+              {MeetItem.contents}
               <span className="Meet-detail-link">
-                {MeetItem.link}
+                {MeetItem.chatUrl}
               </span>
             </div>
           </div>
@@ -176,7 +131,6 @@ export default function MeetDetail() {
         <div className="Meet-detail-comment-write">
           <label>
             <textarea
-              cinema="text"
               placeholder="답변을 입력해주세요."
               value={submitComment}
               onChange={handleCommentChange}
