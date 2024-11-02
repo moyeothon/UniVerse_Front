@@ -1,5 +1,5 @@
 import './Diary.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import searchicon from './assets/search.svg';
 import ngood from './assets/n-good.svg';
@@ -12,12 +12,13 @@ import camera from './assets/camera.svg';
 export const Diary = () => {
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
+    const [url, setUrl] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
     const [place, setPlace] = useState('');
     const [review, setReview] = useState('');
-    const [isOn, setOn] = useState(0);
-    const [recommendValue, setRecommendValue] = useState(0);
+    const [isOn, setOn] = useState(true);
+    const [recommendValue, setRecommendValue] = useState(true);
     const [ratings, setRatings] = useState({
         acting: 0,
         directing: 0,
@@ -25,62 +26,6 @@ export const Diary = () => {
         music: 0,
         visual: 0
     });
-    const handleSubmit = async () => {
-        const diaryData = {
-            movieId : "Long", //영화 id
-            title : selectedMovie, //제목
-            body : review, //내용
-            summary : '', //내용 요약
-            place: place,
-            scorePerformer : ratings.acting, //연기력
-            scoreDirector : ratings.directing, //연출력
-            scoreVisual : ratings.visual, //영상미
-            scoreMusic : ratings.music, //음악
-            scoreArtistry : ratings.scenario, //예술성=>각본
-            watchDate : selectedDate, //시청일
-            isRecommend : recommendValue, //추천 여부
-            isPublic : !isOn, //공개 여부
-            imageUrls: [
-                images
-            ]
-        }
-        
-            try {
-                const token = localStorage.getItem('accessToken');
-
-                if (!token) {
-                    alert('로그인이 필요합니다.');
-                    navigate('/login')
-                    return ;
-                }
-                const response = await fetch('http://moyeothon.limikju.com:8080/api/records',{
-                    method:'POST',
-                    headers:{
-                        'Content-Type':'application/json',
-                        'Authorization': token
-                    },
-                    body:JSON.stringify(diaryData)
-                });
-    
-                if(response.status===200){
-                    console.log(diaryData);
-                    alert('글이 등록되었습니다.');
-                    navigate('/cinelog');
-                } else {
-                    if(response.status === 401) {
-                        alert('인증이 만료되었습니다. 다시 로그인해주세요.')
-                        navigate('/login');
-                        return;
-                    }
-                }
-            }catch(error){
-                console.error('Error')
-                alert('등록 중 오류가 발생했습니다.')
-            }
-                
-    }
-    
-    
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
@@ -100,6 +45,7 @@ export const Diary = () => {
             });
           };
           reader.readAsDataURL(file);
+          handleImg(file);
         });
       };
     
@@ -139,9 +85,90 @@ export const Diary = () => {
     };
 
     const toggleHandler = () => {
-        setOn(!isOn)
-        setRecommendValue(!recommendValue)
+        setOn((prev) => !prev);
+        setRecommendValue((prev) => !prev);
     };
+    
+    const handleImg = async (imageFile) => {
+        const formData = new FormData();
+        formData.append('image',imageFile);
+        
+        try{
+            const token = localStorage.getItem('accessToken');
+            const res = await fetch('http://moyeothon.limikju.com:8080/api/records/image',{
+                method:'POST',
+                headers:{
+                    
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+            })
+            const data = await res.json();
+            const imageUrl = data.result;
+            setUrl((prevImages) => {
+                console.log("Previous Images:", prevImages);
+                console.log("New Image URL:", imageUrl);
+                return [...prevImages,imageUrl];
+            });
+    } catch (error) {
+        console.error('Image upload error:', error);
+    };
+}
+
+    const handleSubmit = async () => {
+        const diaryData = {
+            movieId : 1, //영화 id
+            title : selectedMovie, //제목
+            body : review, //내용
+            summary : '', //내용 요약
+            whatchLocation: place,
+            scorePerformer : ratings.acting, //연기력
+            scoreDirector : ratings.directing, //연출력
+            scoreVisual : ratings.visual, //영상미
+            scoreMusic : ratings.music, //음악
+            scoreArtistry : ratings.scenario, //예술성=>각본
+            watchDate : selectedDate, //시청일
+            recommend : recommendValue, //추천 여부
+            isPublic : isOn, //공개 여부
+            imageUrls: 
+                url
+            
+        }
+        
+            try {
+                const token = localStorage.getItem('accessToken');
+
+                if (!token) {
+                    alert('로그인이 필요합니다.');
+                    navigate('/login')
+                    return ;
+                }
+                const response = await fetch('http://moyeothon.limikju.com:8080/api/records',{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body:JSON.stringify(diaryData)
+                });
+    
+                if(response.status===200){
+                    console.log(diaryData);
+                    alert('글이 등록되었습니다.');
+                    navigate('/cinelog');
+                } else {
+                    if(response.status === 401) {
+                        alert('인증이 만료되었습니다. 다시 로그인해주세요.')
+                        navigate('/login');
+                        return;
+                    }
+                }
+            }catch(error){
+                console.error('Error')
+                alert('등록 중 오류가 발생했습니다.')
+            }
+                
+    }
 
 
     return (
@@ -317,7 +344,7 @@ export const Diary = () => {
                     </div>
                 </div>
 
-                <button className='submit-button' onClick={()=>handleSubmit()} >
+                <button className='submit-button' onClick={()=>{handleSubmit()}} >
                     등록하기
                 </button>
 
