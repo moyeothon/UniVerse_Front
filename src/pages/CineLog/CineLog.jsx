@@ -1,5 +1,5 @@
 import './CineLog.css';
-import CineLogList from '../../components/CineLogList/CineLogList';
+import CineLogList from '../../components/CinelogList/Cineloglist';
 
 export const CineLog = () => {
     return (

@@ -1,10 +1,10 @@
-import './CineLogList.css';
+import './Cineloglist.css';
 import wgood from '../../pages/Diary/assets/w-good.svg';
 import nbad from '../../pages/Diary/assets/n-bad.svg';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const CineLogList= () => {
+export const Cineloglist= () => {
     const [ratings, setRatings] = useState({
         acting: 0,
         directing: 0,
@@ -93,4 +93,4 @@ export const CineLogList= () => {
     );
 }
 
-export default CineLogList;
+export default Cineloglist;
