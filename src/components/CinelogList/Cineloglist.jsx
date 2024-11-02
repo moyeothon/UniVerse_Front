@@ -48,7 +48,7 @@ export const CineLogList= () => {
                     <div className='movie-details'>글쓴이ㅣsdfsd</div>
                     <div className='movie-details'>글쓴이ㅣsdfs</div>
                     <div className={isRecommend ? "recommend" : "recommend-bad"}>
-                        <div className={isRecommend ? "r-text" : "r-text-bad"}>이 영화를 추천해요</div>
+                        <div className={isRecommend ? "cr-text" : "r-text-bad"}>이 영화를 추천해요</div>
                         <img className='gbicon' src={isRecommend ? wgood : nbad} alt="" />
                     </div>
                 </div>

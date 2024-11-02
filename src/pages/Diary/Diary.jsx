@@ -1,5 +1,6 @@
 import './Diary.css';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import searchicon from './assets/search.svg';
 import ngood from './assets/n-good.svg';
 import wgood from './assets/w-good.svg';
@@ -9,11 +10,77 @@ import camera from './assets/camera.svg';
 
 
 export const Diary = () => {
+    const navigate = useNavigate();
     const [images, setImages] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
     const [place, setPlace] = useState('');
     const [review, setReview] = useState('');
+    const [isOn, setOn] = useState(0);
+    const [recommendValue, setRecommendValue] = useState(0);
+    const [ratings, setRatings] = useState({
+        acting: 0,
+        directing: 0,
+        scenario: 0,
+        music: 0,
+        visual: 0
+    });
+    const handleSubmit = async () => {
+        const diaryData = {
+            movieId : "Long", //영화 id
+            title : selectedMovie, //제목
+            body : review, //내용
+            summary : '', //내용 요약
+            place: place,
+            scorePerformer : ratings.acting, //연기력
+            scoreDirector : ratings.directing, //연출력
+            scoreVisual : ratings.visual, //영상미
+            scoreMusic : ratings.music, //음악
+            scoreArtistry : ratings.scenario, //예술성=>각본
+            watchDate : selectedDate, //시청일
+            isRecommend : recommendValue, //추천 여부
+            isPublic : !isOn, //공개 여부
+            imageUrls: [
+                images
+            ]
+        }
+        
+            try {
+                const token = localStorage.getItem('accessToken');
+
+                if (!token) {
+                    alert('로그인이 필요합니다.');
+                    navigate('/login')
+                    return ;
+                }
+                const response = await fetch('http://moyeothon.limikju.com:8080/api/records',{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json',
+                        'Authorization': token
+                    },
+                    body:JSON.stringify(diaryData)
+                });
+    
+                if(response.status===200){
+                    console.log(diaryData);
+                    alert('글이 등록되었습니다.');
+                    navigate('/cinelog');
+                } else {
+                    if(response.status === 401) {
+                        alert('인증이 만료되었습니다. 다시 로그인해주세요.')
+                        navigate('/login');
+                        return;
+                    }
+                }
+            }catch(error){
+                console.error('Error')
+                alert('등록 중 오류가 발생했습니다.')
+            }
+                
+    }
+    
+    
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
@@ -40,13 +107,6 @@ export const Diary = () => {
         setImages(prev => prev.filter((_, i) => i !== index));
       };
 
-      const [ratings, setRatings] = useState({
-        acting: 0,
-        directing: 0,
-        scenario: 0,
-        music: 0,
-        visual: 0
-    });
 
     const handleStarClick = (id, rating) => {
         setRatings((prev) => {
@@ -77,9 +137,6 @@ export const Diary = () => {
     const handleReviewChange = (e) => {
         setReview(e.target.value);
     };
-
-    const [isOn, setOn] = useState(false);
-    const [recommendValue, setRecommendValue] = useState(false);
 
     const toggleHandler = () => {
         setOn(!isOn)
@@ -257,11 +314,10 @@ export const Diary = () => {
                                 <img style={{background:'none'}} src={recommendValue ? nbad : wbad} alt="비추천" />
                             </button>
                         </div>
-
                     </div>
                 </div>
 
-                <button className='submit-button' >
+                <button className='submit-button' onClick={()=>handleSubmit()} >
                     등록하기
                 </button>
 
