@@ -1,24 +1,34 @@
-import React from 'react'
-import './Nav.css'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import './Nav.css';
+import { NavLink } from 'react-router-dom';
+import { IoPersonCircleSharp } from "react-icons/io5";
 
 export default function Nav() {
+    const token = localStorage.getItem('accessToken');
+    const isLoggedIn = !!token;
+
     return (
-        <div id='nav'>
-            <NavLink to='/' id='logo'>Logo</NavLink>
-            <div id='top'>
-                <div id='cine-log'>Cine Log</div>
-                <div id='meet'>Meet</div>
-                <div id='diary'>Diary</div>
+        <div className='nav'>
+            <NavLink to='/' className='logo'>Logo</NavLink>
+            <div className='top'>
+                <NavLink to='/cineLog' className='cine-log'>Cine Log</NavLink>
+                <NavLink to='/meetMain' className='meet'>Meet</NavLink>
+                <NavLink to='/diary' className='diary'>Diary</NavLink>
             </div>
-            <div id='right'>
-                <NavLink to='/login' id='login'>
-                    <div>Login</div>
-                </NavLink>
-                <NavLink to='/signup' id='sign-up'>
-                    <div>Sign Up</div>
-                </NavLink>
+            <div className='right'>
+                {isLoggedIn ? (
+                    <div><IoPersonCircleSharp className='person' /></div>
+                ) : (
+                    <>
+                        <NavLink to='/login' className='login'>
+                            <div>Login</div>
+                        </NavLink>
+                        <NavLink to='/signup' className='signUp'>
+                            <div>Sign Up</div>
+                        </NavLink>
+                    </>
+                )}
             </div>
         </div>
-    )
+    );
 }

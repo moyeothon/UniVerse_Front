@@ -1,0 +1,218 @@
+@font-face {
+  font-family: 'Pretendard-Bold';
+  src: url('../fonts/Pretendard-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Medium';
+  src: url('../fonts/Pretendard-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('../fonts/Pretendard-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-SemiBold';
+  src: url('../fonts/Pretendard-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+.MeetWrite_container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  margin-top: 50px;
+}
+
+.MeetWrite_top_container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 580px;
+}
+.MeetWrite_top{
+  font-size: 35px ;
+  font-family: 'Pretendard-Bold';
+}
+.MeetWrite_submit_button button{
+  width: 180px;
+  height: 50px;
+  border-radius: 15px;
+  background-color: #021C40;
+  color: #ffffff;
+  font-size: 17px;
+  font-family: 'Pretendard-SemiBold';
+}
+.MeetWrite_contents_container{
+  margin-top: 50px;
+}
+.MeetWrite_title_container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.MeetWrite_category_cinema{
+  margin-left: 250px;
+}
+.MeetWrite_category_region{
+  margin-left: 15px;
+}
+
+.MeetWrite_Title {
+  width: 500px;
+  height: 30px;
+  left: 201px;
+  padding: 18px 22px;
+  gap: 10px;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  color: #A1A6A9;
+  font-size: 23px;
+  background-color: #F6F6F6;
+  font-family: 'Pretendard-Regular';
+  border: 1px solid #D1D5D7;
+}
+
+.MeetWrite_Title::placeholder {
+  font-family: 'Pretendard-Regular';
+  font-size: 23px;
+  text-align: left;
+  color: #A1A6A9;
+}
+
+
+
+
+.MeetWrite_content {
+  width: 985px;
+  height: 450px;
+  border-radius: 15px;
+  border: 1px solid #D1D5D7;
+  outline: none;
+  font-size: 20px;
+  box-sizing: border-box;
+  padding:30px;  
+  color: #A1A6A9;
+  resize: none;
+  display: flex;
+  background-color: #F6F6F6;
+  font-family: 'Pretendard-Regular';
+  margin-top: 20px;
+}
+
+.MeetWrite_content::placeholder {
+  font-family: 'Pretendard-Regular';
+  font-size: 20px;
+  color: #A1A6A9;
+}
+
+.MeetWrite_link{
+  display: flex;
+  align-items: center;
+  width: 985px;
+  height: 60px;
+  margin-top: 20px;
+  left: 201px;
+  color: #ffffff;
+  font-family: 'Pretendard-Regular';
+  font-size: 20px;
+  border-radius: 15px;
+  background: #8D9BAF;
+  padding: 20px;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+.MeetWrite_link::placeholder{
+  font-family: 'Pretendard-Regular';
+  font-size: 20px;
+  color: #ffffff;
+}
+
+
+/* 드롭다운 컨테이너 스타일 */
+.MeetWrite_category_region,.MeetWrite_category_cinema {
+  width: 70px;
+  position: relative;
+}
+
+.MeetWrite_category_cinema{
+  width: 100px;
+}
+
+.MeetWrite_category_region input[type="button"],.MeetWrite_category_cinema input[type="button"]{
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  font-family: 'Pretendard-Medium';
+  color: #75787A;
+  cursor: pointer;
+  background-color: #f6f6f6;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+
+/* 드롭다운 메뉴 스타일 */
+.MeetWrite_category_region ul,
+.MeetWrite_category_cinema ul {
+  position: absolute;
+  top: 110%; 
+  left: 0;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #f6f6f6;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  transition: opacity 0.3s ease; /* 나타나는 애니메이션 */
+}
+
+/* 드롭다운 항목 스타일 */
+.MeetWrite_category_region ul li ,
+.MeetWrite_category_cinema ul li{
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Pretendard-Medium';
+  color: #75787A;
+  background-color: #f6f6f6;
+}
+
+.MeetWrite_category_region ul li:hover ,
+.MeetWrite_category_cinema ul li:hover{
+  background-color: #f5f5f5;
+}
+
+/* 드롭다운 활성화 상태 */
+.MeetWrite_category_region ul.open ,
+.MeetWrite_category_cinema ul.open{
+  display: block;
+  opacity: 1;
+}
+
+.MeetWrite_category_region ul.closed ,
+.MeetWrite_category_cinema ul.closed{
+  display: none;
+  opacity: 0;
+}

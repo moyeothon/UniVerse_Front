@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import './SignUp.css'
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 export default function SignUp() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState('');
@@ -65,95 +67,98 @@ export default function SignUp() {
             alert('모든 필드를 올바르게 입력해주세요.');
             return;
         }
-
-        const requestData = {
-            userName: username,
-            password: password,
-            email: email,
-            nickname: nickname
-        };
-
+    
         try {
-            const response = await fetch('http://moyeothon.limikju.com:8080/api/members', {
-                method: 'POST',
+            const response = await axios.post('http://moyeothon.limikju.com:8080/api/members', {
+                username: username,
+                password: password,
+                email: email,
+                nickname: nickname
+            }, {
                 headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestData)
+                    'Content-Type': 'application/json',
+                    // 'Accept': '*/*'
+                }
             });
-
-            const result = await response.json();
-
-            if (result.isSuccess) {
+    
+            if (response.data.isSuccess) {
                 alert('회원가입 성공!');
+                navigate('/login');
             } else {
-                alert(`회원가입 실패: ${result.message}`);
+                alert(`회원가입 실패: ${response.data.message}`);
             }
         } catch (error) {
             console.error('회원가입 중 에러 발생:', error);
             alert('회원가입 중 오류가 발생했습니다.');
         }
     };
+    
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSignUp();
+        }
+    };
 
     return (
         <div className='loginPage'>
             <div className='loginContainer'>
-                <div className='loginTitle'>Sign Up</div>
+                <div className='loginTitle'>SignUp</div>
                 <div className='loginForm'>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='text' 
                             placeholder='Username' 
                             required 
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
+                            onKeyDown={handleKeyDown}
                         />
                     </div>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='text' 
                             placeholder='Nickname' 
                             required 
                             value={nickname}
                             onChange={(e) => setNickname(e.target.value)}
+                            onKeyDown={handleKeyDown}
                         />
                     </div>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='password' 
                             placeholder='Password' 
                             required 
                             value={password}
                             onChange={handlePasswordChange}
+                            onKeyDown={handleKeyDown}
                         />
-                        {passwordError && <div className='error-message'>{passwordError}</div>}
+                        {passwordError && <div className='errorMessage'>{passwordError}</div>}
                     </div>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='password' 
                             placeholder='Confirm Password' 
                             required 
                             value={confirmPassword}
                             onChange={handleConfirmPasswordChange}
+                            onKeyDown={handleKeyDown}
                         />
-                        {confirmPasswordError && <div className='error-message'>{confirmPasswordError}</div>}
+                        {confirmPasswordError && <div className='errorMessage'>{confirmPasswordError}</div>}
                     </div>
-                    <div className='input-container'>
+                    <div className='inputContainer'>
                         <input 
                             type='email' 
                             placeholder='Email' 
                             required 
                             value={email}
                             onChange={handleEmailChange}
+                            onKeyDown={handleKeyDown}
                         />
-                        {emailError && <div className='error-message'>{emailError}</div>}
+                        {emailError && <div className='errorMessage'>{emailError}</div>}
                     </div>
                 </div>
-                <div className='loginButton' onClick={handleSignUp}>SignUp</div>
-                <div className='loginInfo'>
-                    <div className='forgotPasswordInfo'>Forgot Password?</div>
-                    <div className='signUpInfo'>Sign Up</div>
-                </div>
+                <div className='signUpButton' onClick={handleSignUp}>SignUp</div>
             </div>
         </div>
     );

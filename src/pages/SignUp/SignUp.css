@@ -12,7 +12,6 @@
 .signUpPage {
     display: flex;
     justify-content: center;
-    align-items: center;
     height: 100vh;
 }
 
@@ -20,35 +19,42 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 200px;
 }
 
 .signUpTitle {
     display: flex;
-    font-size: 32px;
+    font-size: 60px;
 }
 
 .signUpForm {
     display: flex;
     flex-direction: column;
     align-items: start;
+    margin-top: 120px;
+    width: 600px;
 }
 
-.input-container {
+.inputContainer {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 20px;
     padding: 20px 0px;
+    width: 600px;
 }
 
-.input-container input {
-    width: 500px;
+.inputContainer input {
+    display: flex;
+    width: 100%;
     padding: 8px 0;
     border: none;
     border-bottom: 1px solid #021C40;
     background-color: transparent;
-    font-size: 25px;
+    font-size: 30px;
     outline: none;
 }
 
-.input-container input:focus {
+.inputContainer input:focus {
     border-bottom: 2px solid #021C40;
 }
 
@@ -56,18 +62,14 @@
     padding: 10px 120px;
     background-color: #021C40;
     color: #F3EEE5;
-    font-size: 20px;
+    font-size: 25px;
     border-radius: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    cursor: pointer;
+    margin-top: 30px;
+    margin-bottom: 23px;
 }
 
-.signUpInfo {
-    display: flex;
-    justify-content: center;
-}
-
-.forgotPasswordInfo {
-    margin-right: 20px;
+.errorMessage {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
 }

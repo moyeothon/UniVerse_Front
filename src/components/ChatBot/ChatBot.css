@@ -1,0 +1,9 @@
+.chatBot {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+}
+
+.chatBotImg {
+    width: 60px;
+}
