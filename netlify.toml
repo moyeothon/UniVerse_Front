@@ -1,0 +1,13 @@
+[build]
+  publish = "build" # 빌드된 파일이 위치할 디렉토리
+  command = "npm run build" # 빌드 명령어
+
+[dev]
+  command = "npm start" # 개발 모드에서 실행할 명령어
+  port = 3000 # 개발 서버 포트
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
