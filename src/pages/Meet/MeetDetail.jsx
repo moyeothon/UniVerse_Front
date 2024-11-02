@@ -16,6 +16,10 @@ export default function MeetDetail() {
   useEffect(() => {
     const fetchMeetItem = async () => {
       const token = localStorage.getItem('accessToken');
+      if (!token) {
+        alert("로그인이 필요합니다."); // 토큰이 없을 경우 알림
+        return;
+      }
       try {
         const response = await axios.get(`http://moyeothon.limikju.com:8080/api/meetings/${id}`, {
           headers: {
@@ -27,9 +31,11 @@ export default function MeetDetail() {
           console.log("Fetched post details:", response.data.result);
         } else {
           console.error("Failed to fetch post details:", response.data.message);
+          alert(response.data.message); // 에러 메시지 표시
         }
       } catch (error) {
         console.error("Error fetching post details:", error);
+        alert("게시물 정보를 가져오는 중 오류가 발생했습니다.");
       } 
     };
     fetchMeetItem();
@@ -37,16 +43,26 @@ export default function MeetDetail() {
 
   // 댓글 가져오기
   const fetchComments = async () => {
+    const token = localStorage.getItem('accessToken');
     try {
-      const response = await axios.get(`http://moyeothon.limikju.com:8080/api/meetings/${id}/comments`);
-      if (response.data && Array.isArray(response.data)) {
-        setBoardComments(response.data);
+      const response = await axios.get(`http://moyeothon.limikju.com:8080/api/meetings/${id}/comments`, {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        }
+      });
+      if (response.data && Array.isArray(response.data.result)) {
+        setBoardComments(response.data.result.map(comment => ({
+          commentId: comment.commentId,
+          content: JSON.parse(comment.content).content, // 댓글 내용 추출
+          username: comment.member.username, // 작성자 이름 추출
+        })));
+        console.log("Fetched comments:", response.data.result);
       } else {
         setBoardComments([]);
       }
-      console.log("Fetched comments:", response.data);
     } catch (error) {
       console.error("Error fetching comments:", error);
+      alert("댓글 정보를 가져오는 중 오류가 발생했습니다.");
     }
   };
 
@@ -63,8 +79,7 @@ export default function MeetDetail() {
     const accessToken = localStorage.getItem('accessToken');
     try {
       const response = await axios.post(`http://moyeothon.limikju.com:8080/api/meetings/${id}/comments`, {
-        id: id,
-        contents: submitComment
+        content: submitComment      
       }, {
         headers: {
           'Authorization': `Bearer ${accessToken}`, 
@@ -79,13 +94,6 @@ export default function MeetDetail() {
       console.error('등록 중 오류 발생:', error);
       alert('등록 중 오류가 발생했습니다. 다시 시도해주세요.');
     }
-  };
-
-  const calculateDaysAgo = (createdAt) => {
-    const date1 = new Date(createdAt);
-    const date2 = new Date();
-    const diffTime = Math.abs(date2 - date1);
-    return Math.floor(diffTime / (1000 * 60 * 60 * 24));
   };
 
   const navigate = useNavigate();
@@ -107,7 +115,7 @@ export default function MeetDetail() {
               </div>
               <div className="detail-profile-username">{MeetItem.host?.nickname || "Unknown"}</div>
             </div>
-            <div className="Meet-detail-ago">{MeetItem.createdAt ? `${calculateDaysAgo(MeetItem.createdAt)}일 전` : 'N/A'}</div>
+            <div className="Meet-detail-ago">1일 전</div>
           </div>
           <div className="Meet-detail-main">
             <div className="Meet-detail-title">
@@ -122,7 +130,7 @@ export default function MeetDetail() {
             <div className="Meet-detail-contents">
               {MeetItem.contents}
               <span className="Meet-detail-link">
-                {MeetItem.chatUrl}
+                오픈채팅 링크 : {MeetItem.chatUrl}
               </span>
             </div>
           </div>
@@ -147,7 +155,7 @@ export default function MeetDetail() {
                 </div>
                 <div className="comment-detail-profile-username">{boardComment.username}</div>
               </div>
-              <div className="comment-detail-ago">{calculateDaysAgo(boardComment.createdAt)}일 전</div>
+              <div className="comment-detail-ago">1일 전</div>
             </div>
             <div className="comment-detail-contents">{boardComment.content}</div>
           </div>
