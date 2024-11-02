@@ -24,8 +24,7 @@
     margin-top: 3%;
 }
 
-.mainContainer {
-    width: 100vh;
+.movieItem {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,7 +33,7 @@
 .mainPoster {
     display: flex;
     width: 300px;
-
+    border-radius: 10px;
 }
 
 .mainInfo {
@@ -51,8 +50,8 @@
     letter-spacing: 2px;
 }
 
-.mainInfoSummary {
-    font-size: 20px;
+.mainInfoSubTitle {
+    font-size: 30px;
 }
 
 .mainInfoContent {
