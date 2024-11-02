@@ -13,7 +13,6 @@ export const Diary = () => {
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
     const [url, setUrl] = useState([]);
-    const [selectedMovie, setSelectedMovie] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
     const [place, setPlace] = useState('');
     const [review, setReview] = useState('');
@@ -26,6 +25,38 @@ export const Diary = () => {
         music: 0,
         visual: 0
     });
+    const [searchTerm, setSearchTerm] = useState('');
+    const [movies, setMovies] = useState([]);
+    const [inputTitle, setInputTitle] = useState('');
+    const [diaryData, setDiaryData] = useState({ movieId: null, title: '' });
+
+    useEffect(() => {
+        if (searchTerm) {
+            const fetchMovies = async () => {
+                try {
+                    const response = await fetch(`http://your-api-url.com/movies?page=1&size=10&keyword=${searchTerm}`);
+                    const data = await response.json();
+    
+                    
+                    const movieList = data.result && Array.isArray(data.result.content) ? data.result.content : [];
+                    console.log("Fetched Movies:", movieList); // 배열 확인
+                    setMovies(movieList);
+                } catch (error) {
+                    console.error('Error fetching movies:', error);
+                    setMovies([]); 
+                }
+            };
+    
+            fetchMovies();
+        } else {
+            setMovies([]); 
+        }
+    }, [searchTerm]);
+    const handleMovieClick = (movie) => {
+        setInputTitle(movie.title); 
+        setDiaryData({ movieId: movie.id, title: movie.title });
+    };
+ 
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
@@ -66,10 +97,6 @@ export const Diary = () => {
 
     const handleRecommendation = (buttonType) => {
         setRecommendValue(buttonType);
-    };
-
-    const handleMovieSelect = (e) => {
-        setSelectedMovie(e.target.value);
     };
     
     const handleDateChange = (e) => {
@@ -118,7 +145,7 @@ export const Diary = () => {
     const handleSubmit = async () => {
         const diaryData = {
             movieId : 1, //영화 id
-            title : selectedMovie, //제목
+            title :"베놈", //제목
             body : review, //내용
             summary : '', //내용 요약
             whatchLocation: place,
@@ -191,13 +218,17 @@ export const Diary = () => {
                             className='search-input'
                             type="text"
                             placeholder='영화를 선택해주세요.'
-                            value={selectedMovie}
-                            onChange={handleMovieSelect} 
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)} 
                         />
                         <img className='search-icon' src={searchicon} alt="search" /> 
-                        <div className='s-list'>
-                            <span className='s-list-item'>베놈</span>
-                        </div>
+                        {movies.map((movie) => (
+                        <div key={movie.id} className="s-list" onClick={() => handleMovieClick(movie)}>
+                            <span className="s-list-item">
+                                {movie.title}
+                            </span>
+                </div>
+            ))}
                          
                     </div>
                 </div>
